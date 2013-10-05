@@ -4,7 +4,7 @@ require File.expand_path('../application', __FILE__)
 # Initialize the rails application
 SampleRailsApp::Application.initialize!
 
-ActionMailer::Base.default_url_options[:host] = 'http://secret-dawn-1486.herokuapp.com/'
+ActionMailer::Base.default_url_options[:host] = 'secret-dawn-1486.herokuapp.com'
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = 
 { 
