@@ -1,0 +1,33 @@
+<div style="margin-top: 3em;">
+<%if current_user%>
+<ul>
+<li><%= link_to "Manage Actors", actors_path%></li>
+<li><%= link_to "Manage Movies", movies_path%></li>
+</ul>
+<%end%>
+</div>
+<%- model_class =  Movie -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => 'Latest Movies' %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:language) %></th>
+      <th><%= model_class.human_attribute_name(:release_date) %></th>
+      <th><%= model_class.human_attribute_name(:actor_id) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= movie.name %></td>
+        <td><%= movie.language %></td>
+        <td><%= movie.release_date %></td>
+        <td><%= movie.actor.andand.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

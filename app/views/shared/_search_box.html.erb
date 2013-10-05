@@ -1,0 +1,27 @@
+<form class="form-search">
+<div class="input-append">
+<%= select_tag "action", options_for_select([["Actor" , "actor"],["Movie" , "movie"],["Date" , "date"]]), :class=>'search-select'%>
+<input type="text" class="span2 search-query" id='search_release_date'>
+<%= image_tag("cal-icon.png", :class => "calendar-icon", :id => 'search_release_date_trigger', :style=>'display:none;') %>
+<button type="submit" class="btn">Search</button>
+</div>
+</form>
+
+<script type="text/javascript">
+$(function() {
+$( "#action" ).change(function() {
+  if ($('#action option:selected').text()=="Date")
+     $('#search_release_date_trigger').show();
+  else
+     $('#search_release_date_trigger').hide();
+ });
+});
+Calendar.setup(
+       {
+         inputField  : "search_release_date",         // ID of the input field
+         ifFormat    : "%Y-%m-%d",    // the date format
+         button: 'search_release_date_trigger'
+       }
+     );
+
+</script>

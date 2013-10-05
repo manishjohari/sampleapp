@@ -1,0 +1,42 @@
+<%= form_for @movie, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :language, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select :language, Movie.languages, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :release_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :release_date, :class => 'text_field', :id=>'release_date' %>
+      <%= image_tag("cal-icon.png", :class => "calendar-icon", :id => 'release_date_trigger') %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :actor_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select :actor_id, Actor.find(:all, :order => "name ASC").collect {|a| [a.name, a.id]},{:include_blank=>"Please Select"}, :class => 'number_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                movies_path, :class => 'btn' %>
+  </div>
+<% end %>
+<script type="text/javascript">
+     Calendar.setup(
+       {
+         inputField  : "release_date",         // ID of the input field
+         ifFormat    : "%Y-%m-%d",    // the date format
+         button: 'release_date_trigger'
+       }
+     );
+</script>

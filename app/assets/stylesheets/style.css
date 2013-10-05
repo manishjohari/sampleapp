@@ -1,0 +1,17 @@
+input[type="search"] {
+padding: 3px;
+border-radius: 3px;
+float: right;
+
+}
+
+.search_box{
+margin-left: 20em;
+float: left;
+margin-top: 7px;
+}
+
+.search-select{
+ width: 84px;
+}
+
