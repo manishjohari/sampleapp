@@ -3,4 +3,6 @@ class Actor < ActiveRecord::Base
   has_many :movies, :dependent => :nullify
 
   self.per_page = 10
+
+  validates_presence_of :name
 end

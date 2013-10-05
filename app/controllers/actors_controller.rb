@@ -13,10 +13,16 @@ class ActorsController < ApplicationController
 
 	def create
 		@actor = Actor.new(params[:actor])
-		Actor.transaction do
-			@actor.save!
+		begin
+			Actor.transaction do
+				@actor.save!
+			end
+			flash[:success] = "Actor created successfully"
+			redirect_to actors_path
+		rescue => e
+			flash.now[:error] = "Something went wrong: #{e}" 
+      render :action => "new"
 		end
-		redirect_to actors_path
 	end
 
 	def edit
@@ -24,10 +30,17 @@ class ActorsController < ApplicationController
 
 	def update
 		@actor.update_attributes(params[:actor])
-		Actor.transaction do 
+		begin
+			Actor.transaction do 
 			@actor.save!
+			end
+			flash[:success] = "Actor updated successfully"
+			redirect_to actors_path	
+		rescue => e
+			flash.now[:error] = "Something went wrong: #{e}" 
+			render :action => 'edit'
 		end
-		redirect_to actors_path
+		
 	end
 
 	def destroy

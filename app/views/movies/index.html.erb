@@ -1,15 +1,24 @@
+
+<div class= 'styled-form'>
+<div class="page-header">
+  <h4><%=t '.title', :default => 'Search' %></h4>
+</div>
 <%= form_for :movie , :url => movies_url, :html => {:method => :get} do |f| %>
   <%= f.label :id, "ID", :class => "info-box-label" %><%= f.text_field :id %><div class="clear"></div>
   <%= f.label :name %><%= f.text_field :name %><div class="clear"></div>
-  <%= f.label :language %><%= f.text_field :language %><div class="clear"></div>
+  <%= f.label :language %><%= f.select :language, Movie.languages,{:include_blank => "Select"}, :class => 'text_field' %><div class="clear"></div>
+  <%= f.label :actor %><%= f.select :actor_id, Actor.find(:all, :order => "name ASC").collect {|a| [a.name, a.id]},{:include_blank=>"Please Select"}, :class => 'number_field' %><div class="clear"></div>
+  <%= f.label :release_date %><%= f.text_field :release_date, :class => 'short-box-input-one', :id=>'release_date'%>
+  <%= image_tag("cal-icon.png", :class => "calendar-icon", :id => 'release_date_trigger') %>
   <div class="clear"></div>
+  
 
   <%= submit_tag("Filter") %>
 <% end %>
 
+</div>
 
-
-
+<div class="clear"></div>
 <%- model_class = Movie -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
@@ -17,12 +26,12 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:language) %></th>
-      <th><%= model_class.human_attribute_name(:release_date) %></th>
-      <th><%= model_class.human_attribute_name(:actor_id) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= link_to "#{model_class.human_attribute_name(:id)}", sort_link("id") %></th>
+      <th><%= link_to "#{model_class.human_attribute_name(:name)}",  sort_link("name") %></th>
+      <th><%= link_to "#{model_class.human_attribute_name(:language)}",  sort_link("language")  %></th>
+      <th><%= link_to "#{model_class.human_attribute_name(:release_date)}",  sort_link("release_date")  %></th>
+      <th><%= link_to "#{model_class.human_attribute_name(:actor_id)}",  sort_link("actor_id")  %></th>
+      <th><%= link_to "#{model_class.human_attribute_name(:created_at)}",  sort_link("created_at")  %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -53,3 +62,12 @@
 <%= link_to t('Add new'),
             new_movie_path,
             :class => 'btn btn-primary' %>
+<script type="text/javascript">
+     Calendar.setup(
+       {
+         inputField  : "release_date",         // ID of the input field
+         ifFormat    : "%Y-%m-%d",    // the date format
+         button: 'release_date_trigger'
+       }
+     );
+</script>
